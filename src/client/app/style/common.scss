@@ -1,0 +1,21 @@
+@import "variables";
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', arial;
+}
+
+body{
+	.container{
+	 	flex: 1;
+	 	display: flex;
+		justify-content: center;
+	 	background-color: $color_gray_light;
+	}
+	.main{
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+}

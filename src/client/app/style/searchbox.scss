@@ -1,0 +1,93 @@
+@import "variables";
+
+$input_weight: 60px;
+
+.searchContainer{
+	margin-top: 80px;
+	width: 450px;
+	h2,
+	h3{
+		font-weight: normal;
+		font-size: 14px;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+	}
+	input,
+	button{
+		width: 100%;
+		outline: none;
+		height: $input_weight;
+		border-radius: 6px;
+	}
+	.fieldGroup{
+		display: flex;
+		margin-top: 10px;
+		.fieldBox{
+			margin-right: 10px;
+			flex: 2;
+		}
+	}
+	.buttonBox{
+		flex: 1;
+		button{
+			background-color: $color_orange;
+			border: none;
+			cursor: pointer;
+			.buttonIcon{
+				font-size: 20px;
+			}
+		}
+	}
+	.fieldBox{
+		flex: 1;
+		.input{
+			background-color: $color_white;
+			border: 1px solid $color_gray;
+			padding: 20px;
+			font-size: 16px;
+		}
+	}
+	.addressBox{
+		.marker{
+		    position: absolute;
+		    padding: 15px;
+		    font-size: 30px;
+		    fill: $color_orange;
+		}
+		.input{
+			padding-left: 50px;
+		}
+	}
+	.results{
+		background: #fff;
+		border: 1px solid $color_gray;
+		border-radius: 6px;
+		list-style-type: none;
+		margin-top: 2px;
+		overflow: hidden;
+		&.resultsHidden{
+			border: none;
+			display: none;
+		}
+		li{
+			font-size: 0.8em;
+			padding: 7px 20px;
+			color: #333;
+			border-bottom: 1px solid $color_gray;
+			cursor: pointer;
+			&:hover{
+				background-color: $color_gray_light;
+			}
+			&:first-child{
+				padding-top: 10px
+			}
+			&:last-child{
+				padding-bottom: 10px;
+				border-bottom: none;
+			}
+			&.resultItemActive{
+				background-color: $color_gray_light;
+			}
+		}
+	}
+}
