@@ -20,8 +20,11 @@ $input_weight: 60px;
 		border-radius: 6px;
 	}
 	.fieldGroup{
-		display: flex;
 		margin-top: 10px;
+		display: none;
+		&.showFieldGroup{
+			display: flex;
+		}
 		.fieldBox{
 			margin-right: 10px;
 			flex: 2;
@@ -40,11 +43,17 @@ $input_weight: 60px;
 	}
 	.fieldBox{
 		flex: 1;
-		.input{
+		input{
 			background-color: $color_white;
 			border: 1px solid $color_gray;
 			padding: 20px;
 			font-size: 16px;
+		}
+		.labelError{
+			color: $color_red;
+			font-size: 0.8em;
+		    margin-top: 5px;
+		    display: inline-block;
 		}
 	}
 	.addressBox{
@@ -54,7 +63,7 @@ $input_weight: 60px;
 		    font-size: 30px;
 		    fill: $color_orange;
 		}
-		.input{
+		input{
 			padding-left: 50px;
 		}
 	}
