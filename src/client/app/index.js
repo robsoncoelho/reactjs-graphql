@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
-import Header from './Components/Header.js';
-import Footer from './Components/Footer.js';
-import SearchBox from './Components/SearchBox.js';
+import Header from './Components/Header/';
+import Footer from './Components/Footer/';
+import SearchBox from './Components/SearchBox/';
 
-import style from './style/common.scss';
+import style from './Components/Common/style.scss';
 
 class App extends Component {
   render () {

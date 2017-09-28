@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import footer from '../style/footer.scss';
+import style from './style.scss';
 
 const Footer = (props) => {
 	return (
