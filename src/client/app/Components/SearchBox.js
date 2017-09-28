@@ -6,6 +6,8 @@ import searchBox from '../style/searchbox.scss';
 
 import MdLocationOn from 'react-icons/lib/md/location-on';
 import FaArrowRight from 'react-icons/lib/fa/arrow-right';
+import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
+
 
 class SearchBox extends Component {
 	constructor(props) {
@@ -13,12 +15,12 @@ class SearchBox extends Component {
 		this.state = {
 			address: '',
 			fieldErrors: {},
+			formSubmited: false,
 			showComplementBox: false,
 			complementaryFields: {
 				number: '',
-				complement: ''
+				complement: '',
 			},
-
 		}
 	}
 
@@ -56,17 +58,34 @@ class SearchBox extends Component {
 			isValid = false;
 		}
 
-		this.setState({fieldErrors: fieldErrors});
-
-		if( isValid ){
-			console.log(this.state.address)
-			console.log(this.state.complementaryFields)
+		if(!this.state.formSubmited ){
+			if( isValid ){
+				this.setState({formSubmited: true})
+				console.log(this.state.address);
+				console.log(this.state.complementaryFields);
+			} else {
+				this.setState({fieldErrors: fieldErrors})
+			}
 		}
 	}
 
   	render() {
 
-  		const { showComplementBox, address, complementaryFields, fieldErrors } = this.state;
+  		const {
+  			showComplementBox,
+  			address,
+  			complementaryFields,
+  			fieldErrors,
+  			formSubmited
+  		} = this.state;
+
+  		let Iconsubmit;
+
+  		if( !formSubmited ){
+  			Iconsubmit = <FaArrowRight className={searchBox.buttonIcon} />
+  		} else {
+  			Iconsubmit = <FaCircleONotch className={searchBox.buttonLoading} />
+  		}
 
 		return (
 			<div className={searchBox.searchContainer}>
@@ -82,20 +101,24 @@ class SearchBox extends Component {
 								suggestsHiddenClassName={searchBox.resultsHidden}
 								suggestItemActiveClassName={searchBox.resultItemActive}
 								onBlur={this.onSuggestBlur.bind(this)}
+							 	disabled={formSubmited}
+							 	country={['br']}
 								onSuggestSelect={this.onSuggestSelect.bind(this)} />
 							<span className={searchBox.labelError}>{fieldErrors["address"]}</span>
 						</div>
 					</div>
 					<div className={classNames(searchBox.fieldGroup, showComplementBox && searchBox.showFieldGroup)}>
 						<div className={searchBox.fieldBox}>
-							<input onChange={this.handleFormChange.bind(this, "number")} value={complementaryFields["number"]} type="text" name="number" placeholder="Número" autoComplete="off" />
+							<input onChange={this.handleFormChange.bind(this, "number")} value={complementaryFields["number"]} disabled={formSubmited} type="text" name="number" placeholder="Número" autoComplete="off" />
 							<span className={searchBox.labelError}>{fieldErrors["number"]}</span>
 						</div>
 						<div className={searchBox.fieldBox}>
-							<input onChange={this.handleFormChange.bind(this, "complement")} value={complementaryFields["complement"]} type="text" name="complement" placeholder="Complemento" autoComplete="off" />
+							<input onChange={this.handleFormChange.bind(this, "complement")} value={complementaryFields["complement"]} disabled={formSubmited} type="text" name="complement" placeholder="Complemento" autoComplete="off" />
 						</div>
 						<div className={searchBox.buttonBox}>
-							<button type="submit"><FaArrowRight className={searchBox.buttonIcon} /></button>
+							<button type="submit">
+								{Iconsubmit}
+							</button>
 						</div>
 					</div>
 				</form>

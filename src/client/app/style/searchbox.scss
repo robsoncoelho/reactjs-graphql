@@ -39,6 +39,10 @@ $input_weight: 60px;
 			.buttonIcon{
 				font-size: 20px;
 			}
+			.buttonLoading{
+				font-size: 30px;
+				animation: spin 2s linear infinite;
+			}
 		}
 	}
 	.fieldBox{
@@ -98,5 +102,11 @@ $input_weight: 60px;
 				background-color: $color_gray_light;
 			}
 		}
+	}
+}
+
+@keyframes spin {
+	100% {
+		transform:rotate(360deg);
 	}
 }
