@@ -8,6 +8,7 @@ import { CLIENT } from './Components/Common/api.js';
 import Header from './Components/Header/';
 import Footer from './Components/Footer/';
 import SearchBox from './Components/SearchBox/';
+import Products from './Components/Products/';
 import style from './Components/Common/style.scss';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
 		    		<Header />
 		    		<section className={style.container}>
 						<Route exact path="/" component={SearchBox}/>
+						<Route path="/products" component={Products}/>
 		    		</section>
 		    		<Footer />
 		    	</div>

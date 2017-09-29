@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Geosuggest from 'react-geosuggest';
 import { graphql } from 'react-apollo';
+import { Redirect } from 'react-router-dom';
 
 import { POC_SEARCH, CLIENT } from '../Common/api.js';
 
@@ -20,7 +21,7 @@ class SearchBox extends Component {
 				number: '',
 				complement: '',
 			},
-			pocResults: '',
+			pocResults: false,
 			errorMessage: '',
 			fieldErrors: {},
 			waitingData: false,
@@ -61,7 +62,7 @@ class SearchBox extends Component {
 	}
 
 	handleFormFocus() {
-		this.setState({pocResults: ''})
+		this.setState({pocResults: false})
 		this.setState({errorMessage: ''})
 	}
 
@@ -118,7 +119,8 @@ class SearchBox extends Component {
 	}
 
 	onFail(response) {
-		console.log(response)
+		this.setState({'pocResults': false});
+		this.setState({'errorMessage': 'Ops! Não foi possível realizar sua busca, tente novamente dentro de alguns instantes.'})
 	}
 
   	render() {
@@ -138,6 +140,12 @@ class SearchBox extends Component {
   		} else {
   			Iconsubmit = <FaCircleONotch className={style.buttonLoading} />
   		}
+
+		if (pocResults) {
+	      	return (
+	        	<Redirect to={'/products'} />
+	      	)
+		}
 
 		return (
 			<div className={style.searchContainer}>
@@ -175,7 +183,7 @@ class SearchBox extends Component {
 						</div>
 					</div>
 				</form>
-				{ pocResults === false &&
+				{ !pocResults &&
 					<div className={style.errorMessage}><p>{errorMessage}</p></div>
 				}
 			</div>
