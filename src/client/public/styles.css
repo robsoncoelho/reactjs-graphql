@@ -13,7 +13,6 @@ header {
 footer {
   min-height: 40px;
   background-color: #4d4d4d;
-  flex-direction: flex-end;
   display: flex;
   align-items: center;
   justify-content: center; }
@@ -56,10 +55,13 @@ footer {
       border: none;
       cursor: pointer; }
       .searchContainer .buttonBox button .buttonIcon {
-        font-size: 20px; }
+        font-size: 20px;
+        fill: #000; }
       .searchContainer .buttonBox button .buttonLoading {
         font-size: 30px;
         animation: spin 2s linear infinite; }
+      .searchContainer .buttonBox button:hover .buttonIcon {
+        fill: #fff; }
   .searchContainer .fieldBox {
     flex: 1; }
     .searchContainer .fieldBox input {
@@ -108,13 +110,83 @@ footer {
 @keyframes spin {
   100% {
     transform: rotate(360deg); } }
+.productPage {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0; }
+  .productPage .product {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #d2d2d2;
+    max-width: 220px;
+    height: 300px;
+    margin: 10px;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center; }
+    .productPage .product .top {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; }
+      .productPage .product .top .productTitle {
+        font-size: 1em;
+        line-height: 1.4em; }
+      .productPage .product .top img {
+        height: 140px;
+        align-self: center;
+        margin-bottom: 20px; }
+    .productPage .product .productValue {
+      font-size: 1.5em;
+      margin-bottom: 2px; }
+      .productPage .product .productValue span {
+        font-size: 0.7em; }
+    .productPage .product .productCounter {
+      display: flex;
+      justify-content: space-between; }
+      .productPage .product .productCounter input,
+      .productPage .product .productCounter button {
+        height: 40px;
+        outline: none; }
+      .productPage .product .productCounter input {
+        padding: 0 10px;
+        max-width: 50%;
+        text-align: center;
+        margin: 0 10px;
+        font-size: 1em;
+        border-radius: 6px;
+        border: 1px solid #d2d2d2; }
+      .productPage .product .productCounter button {
+        border: none;
+        border-radius: 50%;
+        background: #fbbe4d;
+        cursor: pointer;
+        width: 40px; }
+        .productPage .product .productCounter button .buttonIcon {
+          font-size: 13px;
+          fill: #000; }
+        .productPage .product .productCounter button:hover .buttonIcon {
+          fill: #fff; }
+  .productPage .loadingProducts {
+    font-size: 50px;
+    align-self: center;
+    fill: #fbbe4d;
+    animation: spin 2s linear infinite; }
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg); } }
 * {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', arial; }
 
 body .container {
-  flex: 1;
+  flex: 2;
+  flex-basis: auto;
   display: flex;
   justify-content: center;
   background-color: #f5f5f5; }
@@ -122,4 +194,5 @@ body .container {
 body .main {
   display: flex;
   flex-direction: column;
-  height: 100%; }
+  min-height: 100%;
+  height: auto; }

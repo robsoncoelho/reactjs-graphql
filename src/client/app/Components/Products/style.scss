@@ -1,0 +1,89 @@
+@import "../Common/variables";
+
+.productPage{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+	.product{
+	    display: flex;
+	    flex-direction: column;
+	    background: $color_white;
+	    border: 1px solid $color_gray;
+	    max-width: 220px;
+	    height: 300px;
+	    margin: 10px;
+	    border-radius: 6px;
+	    padding: 20px;
+	    text-align: center;
+	    .top{
+		    flex: 1;
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: space-between;
+		    .productTitle{
+		    	font-size: 1em;
+		    	line-height: 1.4em;
+		    }
+		    img{
+				height: 140px;
+				align-self: center;
+				margin-bottom: 20px;
+		    }
+		}
+		.productValue{
+			font-size: 1.5em;
+			margin-bottom: 2px;
+			span{
+				font-size: 0.7em;
+			}
+	    }
+		.productCounter{
+			display: flex;
+			justify-content: space-between;
+			input,
+			button{
+				height: 40px;
+				outline: none;
+			}
+			input{
+				padding: 0 10px;
+				max-width: 50%;
+				text-align: center;
+				margin: 0 10px;
+				font-size: 1em;
+				border-radius: 6px;
+				border: 1px solid $color_gray;
+			}
+			button{
+				border: none;
+				border-radius: 50%;
+				background: $color_orange;
+				cursor: pointer;
+				width: 40px;
+				.buttonIcon{
+					font-size: 13px;
+					fill: $color_black;
+				}
+				&:hover{
+					.buttonIcon{
+						fill: $color_white;
+					}
+				}
+			}
+		}
+	}
+	.loadingProducts{
+	    font-size: 50px;
+    	align-self: center;
+		fill: $color_orange;
+		animation: spin 2s linear infinite;
+	}
+}
+
+@keyframes spin {
+	100% {
+		transform:rotate(360deg);
+	}
+}

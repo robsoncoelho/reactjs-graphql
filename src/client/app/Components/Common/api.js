@@ -6,12 +6,26 @@ export const CLIENT = new ApolloClient({
 });
 
 export const POC_SEARCH = gql`
-  query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
-	  pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
-	    __typename
-	    id
-	    status
-	  }
+  	query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
+	  	pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
+		    __typename
+		    id
+		    status
+	  	}
+	}
+`;
+
+export const POC_PRODUCTS = gql`
+	query pocCategorySearch($id: ID!, $search: String!, $categoryId: Int!) {
+	  	poc(id: $id) {
+	    	products(categoryId: $categoryId, search: $search) {
+		      	productVariants{
+			        title
+			        imageUrl
+			        price
+		      	}
+		    }
+	  	}
 	}
 `;
 

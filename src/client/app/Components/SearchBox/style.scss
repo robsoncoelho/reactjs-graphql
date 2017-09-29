@@ -46,10 +46,16 @@ $input_weight: 60px;
 			cursor: pointer;
 			.buttonIcon{
 				font-size: 20px;
+				fill: $color_black;
 			}
 			.buttonLoading{
 				font-size: 30px;
 				animation: spin 2s linear infinite;
+			}
+			&:hover{
+				.buttonIcon{
+					fill: $color_white;
+				}
 			}
 		}
 	}
