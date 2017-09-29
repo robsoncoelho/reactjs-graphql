@@ -21,6 +21,7 @@ class SearchBox extends Component {
 				complement: '',
 			},
 			pocResults: '',
+			errorMessage: '',
 			fieldErrors: {},
 			waitingData: false,
 			showComplementBox: false,
@@ -61,6 +62,7 @@ class SearchBox extends Component {
 
 	handleFormFocus() {
 		this.setState({pocResults: ''})
+		this.setState({errorMessage: ''})
 	}
 
 	handleFormSubmit(event) {
@@ -102,10 +104,16 @@ class SearchBox extends Component {
 
 	onResponse(data) {
 		this.setState({waitingData: false});
-		if( data.length > 0 ){
-			this.setState({'pocResults': data});
+		if( data.length > 0){
+			if( data[0].status === "AVAILABLE" ){
+				this.setState({'pocResults': data[0]});
+			} else {
+				this.setState({'pocResults': false});
+				this.setState({'errorMessage': 'Nossos fornecedores nessa região não estão disponíveis no momento.'})
+			}
 		} else {
 			this.setState({'pocResults': false});
+			this.setState({'errorMessage': 'Ops! Não temos fornecedores para atender essa região no momento.'})
 		}
 	}
 
@@ -119,7 +127,8 @@ class SearchBox extends Component {
   			address,
   			fieldErrors,
   			waitingData,
-  			pocResults
+  			pocResults,
+  			errorMessage
   		} = this.state;
 
   		let Iconsubmit;
@@ -167,7 +176,7 @@ class SearchBox extends Component {
 					</div>
 				</form>
 				{ pocResults === false &&
-					<div className={style.errorMessage}><p>Ops! Não temos fornecedores para atender essa região no momento.</p></div>
+					<div className={style.errorMessage}><p>{errorMessage}</p></div>
 				}
 			</div>
 		)
