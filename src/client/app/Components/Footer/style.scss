@@ -1,7 +1,7 @@
 @import "../Common/variables";
 
 footer{
-	height: 40px;
+	min-height: 40px;
 	background-color: $color_gray_dark;
 	flex-direction: flex-end;
 	display: flex;

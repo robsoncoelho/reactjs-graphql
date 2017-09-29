@@ -2,6 +2,10 @@
 
 $input_weight: 60px;
 
+.container{
+	min-height: 400px;
+}
+
 .searchContainer{
 	margin-top: 80px;
 	width: 450px;
@@ -18,6 +22,10 @@ $input_weight: 60px;
 		outline: none;
 		height: $input_weight;
 		border-radius: 6px;
+	}
+	.errorMessage{
+		font-size: 2em;
+		margin-top: 20px;
 	}
 	.fieldGroup{
 		margin-top: 10px;
