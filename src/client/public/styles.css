@@ -8,6 +8,9 @@ header {
     font-size: 1.6em;
     font-weight: normal;
     color: #f5f5f5; }
+    header > h1 a {
+      color: #f5f5f5;
+      text-decoration: none; }
     header > h1 .beerIcon {
       font-size: 46px; }
 footer {

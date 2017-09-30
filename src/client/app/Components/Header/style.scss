@@ -10,6 +10,10 @@ header{
 		font-size: 1.6em;
 		font-weight: normal;
 		color: $color_gray_light;
+		a{
+			color: $color_gray_light;
+			text-decoration: none;
+		}
 		.beerIcon{
 		    font-size: 46px;
 		}
