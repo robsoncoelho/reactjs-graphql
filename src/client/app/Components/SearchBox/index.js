@@ -105,9 +105,11 @@ class SearchBox extends Component {
 
 	onResponse(data) {
 		this.setState({waitingData: false});
+		console.log(data)
 		if( data.length > 0){
 			if( data[0].status === "AVAILABLE" ){
 				this.setState({'pocResults': data[0]});
+
 			} else {
 				this.setState({'pocResults': false});
 				this.setState({'errorMessage': 'Nossos fornecedores nessa região não estão disponíveis no momento.'})
@@ -143,7 +145,7 @@ class SearchBox extends Component {
 
 		if (pocResults) {
 	      	return (
-	        	<Redirect to={'/products'} />
+	        	<Redirect to={{pathname: '/products', state: { pocSearch: pocResults, address: address }}} />
 	      	)
 		}
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { POC_PRODUCTS, CLIENT } from '../Common/api.js';
+import { Redirect } from 'react-router-dom';
 
 import Product from './product.js';
 import Search from './search.js';
@@ -20,11 +21,21 @@ class Products extends Component {
 	     	errorMessage: '',
 	     	search: '',
 	     	isLoading: false,
+	     	pocID: null,
+	     	address: null
 	    }
   	}
 
   	componentDidMount() {
-  		this.requestPOCList('113', "", 0);
+  		const {
+  			location
+  		} = this.props;
+
+  		if( location.state ){
+  			this.setState({pocID: location.state.pocSearch.id})
+  			this.setState({address: location.state.address})
+  			this.requestPOCList(location.state.pocSearch.id, "", 0);
+  		}
   	}
 
   	requestPOCList(id, search, categoryId) {
@@ -50,7 +61,6 @@ class Products extends Component {
 				this.setState({'products': productList});
 			} else {
 				const products = this.state.cartProducts;
-
 				productList.map((product, index) => {
 					products.some(function(productCart){
 				        if(product.title === productCart.title){
@@ -59,7 +69,6 @@ class Products extends Component {
 
 				    });
 				})
-
 				this.setState({'products': productList});
 			}
 		} else {
@@ -82,7 +91,6 @@ class Products extends Component {
 		} else {
 	    	product['count'] = (event.target.validity.valid) ? event.target.value : product['count'];
 	    }
-
 		product['priceTotal'] = product['count'] * product['price'];
 
 		return product;
@@ -141,24 +149,33 @@ class Products extends Component {
   			errorMessage,
   			products,
   			isLoading,
+  			pocID
   		} = this.state;
 
-  		if( isLoading ) {
-  			return (
-  				<div className={style.loadingProducts}>
-  					<FaCircleONotch className={style.loadingIcon}/>
-  				</div>
-  			)
-  		} else if( products !== null ){
-			return (
-				<section className={style.productList}>
-				{products.map((data, index) =>
-					<Product countProduct={this.countProduct.bind(this)} key={index} data={data} />
-				)}
-				</section>
-			)
-		} else if( errorMessage !== '' ){
-			return ( <p className={style.errorMessage}>{errorMessage}</p> )
+  		const {
+  			location
+  		} = this.props;
+
+  		if( location.state ) {
+	  		if( isLoading ) {
+	  			return (
+	  				<div className={style.loadingProducts}>
+	  					<FaCircleONotch className={style.loadingIcon}/>
+	  				</div>
+	  			)
+	  		} else if( products !== null ){
+				return (
+					<section className={style.productList}>
+					{products.map((data, index) =>
+						<Product countProduct={this.countProduct.bind(this)} key={index} data={data} />
+					)}
+					</section>
+				)
+			} else if( errorMessage !== '' ){
+				return ( <p className={style.errorMessage}>{errorMessage}</p> )
+			}
+		} else {
+			return <Redirect to={'/'} />
 		}
   	}
 
