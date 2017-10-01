@@ -29,3 +29,11 @@ export const POC_PRODUCTS = gql`
 	}
 `;
 
+export const POC_CATEGORIES = gql`
+	query allCategoriesSearch {
+	  	allCategory{
+	    	title
+	    	id
+	  	}
+	}
+`;

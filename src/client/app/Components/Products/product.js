@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 
+import classNames from 'classnames/bind';
 import style from './style.scss';
 import FaPlus from 'react-icons/lib/fa/plus';
 import FaMinus from 'react-icons/lib/fa/minus';
 
 const Product = ({ data, countProduct, handleFormChange }) => (
-	<div className={style.product}>
+	<div className={classNames(style.product, data.count > 0 && style.productSelected)}>
 		<div className={style.top}>
 			<p className={style.productTitle}>{data.title}</p>
 			<img src={data.imageUrl} />

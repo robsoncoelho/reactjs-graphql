@@ -142,11 +142,25 @@ footer {
       height: 40px;
       margin: 20px 12px 0;
       display: flex;
-      flex-direction: column; }
+      flex-direction: row;
+      justify-content: space-between; }
+      .productPage .productsContainer .filters .categoryField,
       .productPage .productsContainer .filters .searchField {
         width: 262px;
         height: 100%;
-        position: relative;
+        position: relative; }
+      .productPage .productsContainer .filters .categoryField {
+        align-self: flex-start; }
+        .productPage .productsContainer .filters .categoryField form {
+          height: 100%; }
+          .productPage .productsContainer .filters .categoryField form select {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 6px;
+            font-size: 1em;
+            border: 1px solid #d2d2d2; }
+      .productPage .productsContainer .filters .searchField {
         align-self: flex-end; }
         .productPage .productsContainer .filters .searchField input, .productPage .productsContainer .filters .searchField button {
           outline: none; }
@@ -196,6 +210,8 @@ footer {
         border-radius: 6px;
         padding: 20px;
         text-align: center; }
+        .productPage .productsContainer .productList .product.productSelected {
+          border: 1px solid #4d4d4d; }
         .productPage .productsContainer .productList .product .top {
           flex: 1;
           display: flex;

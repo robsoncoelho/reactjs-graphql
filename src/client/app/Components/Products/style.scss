@@ -27,16 +27,34 @@
 	.productsContainer{
 	    display: flex;
 	    width: 1130px;
-	    flex-direction: column;
+		flex-direction: column;
 	    .filters{
 			height: 40px;
 			margin: 20px 12px 0;
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
+			justify-content: space-between;
+			.categoryField,
 			.searchField{
 				width: 262px;
 				height: 100%;
 				position: relative;
+			}
+			.categoryField{
+				align-self: flex-start;
+				form{
+				    height: 100%;
+				    select{
+						width: 100%;
+						height: 100%;
+						background: $color_white;
+						border-radius: 6px;
+						font-size: 1em;
+						border: 1px solid $color_gray;
+				    }
+				}
+			}
+			.searchField{
 			    align-self: flex-end;
 			    input,button{
 			    	outline: none;
@@ -95,6 +113,9 @@
 			    border-radius: 6px;
 			    padding: 20px;
 			    text-align: center;
+			    &.productSelected{
+			    	border: 1px solid $color_gray_dark;
+			    }
 			    .top{
 				    flex: 1;
 				    display: flex;

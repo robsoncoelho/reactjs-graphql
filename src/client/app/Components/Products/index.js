@@ -5,9 +5,9 @@ import { Redirect } from 'react-router-dom';
 
 import Product from './product.js';
 import Search from './search.js';
+import Categories from './categories.js';
 import Cart from './cart.js';
 
-import classNames from 'classnames/bind';
 import style from './style.scss';
 import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
 
@@ -147,13 +147,17 @@ class Products extends Component {
 		})
   	}
 
+  	filterCategory(event) {
+  		this.requestPOCList(this.state.pocID, this.state.search, event.target.value)
+  	}
+
   	searchProduct(event) {
 	    this.setState({'search': event.target.value});
   	}
 
   	searchSubmit(event) {
 		event.preventDefault();
-		this.requestPOCList('113', this.state.search, 0);
+		this.requestPOCList(this.state.pocID, this.state.search, 0);
 	}
 
   	renderResults() {
@@ -194,12 +198,14 @@ class Products extends Component {
   	render() {
    		const {
   			cartAmount,
+  			address,
   		} = this.state;
 
 		return (
 			<div className={style.productPage}>
 				<div className={style.productsContainer}>
 					<section className={style.filters}>
+						<Categories address={address} filterCategory={this.filterCategory.bind(this)} />
 						<Search searchProduct={this.searchProduct.bind(this)} searchSubmit={this.searchSubmit.bind(this)} />
 					</section>
 					{this.renderResults()}
