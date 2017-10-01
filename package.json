@@ -30,7 +30,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack -d --watch",
-    "start": "npm run dev"
+    "build": "webpack -p",
+    "start": "http-server ./src/client -o"
   },
   "repository": {
     "type": "git",
