@@ -31,7 +31,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "http-server ./src/client -o"
+    "start": "npm run build && http-server ./src/client -a localhost -p 3000 -o"
   },
   "repository": {
     "type": "git",
