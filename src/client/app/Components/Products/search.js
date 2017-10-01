@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import FaSearch from 'react-icons/lib/fa/search';
 
 import style from './style.scss';
-import FaSearch from 'react-icons/lib/fa/search';
 
 const Search = ({ searchProduct, searchSubmit }) => (
 	<div className={style.searchField}>

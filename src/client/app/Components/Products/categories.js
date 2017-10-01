@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { POC_CATEGORIES, CLIENT } from '../Common/api.js';
+import FaSearch from 'react-icons/lib/fa/search';
 
 import style from './style.scss';
-import FaSearch from 'react-icons/lib/fa/search';
 
 class Categories extends Component {
 	constructor(props) {
@@ -16,19 +16,13 @@ class Categories extends Component {
   		CLIENT.query({ query: POC_CATEGORIES, variables: { algorithm: "NEAREST", lat: lat, long: lng, now: now },
 		}).then((response) => {
 			this.onResponse(response.data.allCategory);
-	    }).catch((response) => {
-			this.onFail(response)
-		});
+	    }).catch((response) => {});
 	}
 
 	onResponse(data) {
 		this.setState({categories: data})
 	}
-
-	onFail(response) {
-
-	}
-
+	
 	render() {
 		const { categories } = this.state;
 		const { address } = this.props;

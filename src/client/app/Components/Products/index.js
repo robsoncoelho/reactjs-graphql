@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { POC_PRODUCTS, CLIENT } from '../Common/api.js';
 import { Redirect } from 'react-router-dom';
+import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
 
 import Product from './product.js';
 import Search from './search.js';
 import Categories from './categories.js';
 import Cart from './cart.js';
-
 import style from './style.scss';
-import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
+
 
 class Products extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	products: null,
+	    	products: [],
 	    	cartProducts: [],
 	     	cartAmount: 0,
 	     	errorMessage: '',
@@ -40,7 +40,13 @@ class Products extends Component {
 
   	requestPOCList(id, search, categoryId) {
   		this.setState({'isLoading': true });
-		CLIENT.query({ query: POC_PRODUCTS, variables: { id: id, search: search, categoryId: categoryId },
+		CLIENT.query({
+			query: POC_PRODUCTS,
+			variables: {
+				id: id,
+				search: search,
+				categoryId: categoryId
+			},
 		}).then((response) => {
 			this.onResponse(response.data.poc);
 	    }).catch((response) => {
@@ -53,11 +59,17 @@ class Products extends Component {
 		const productList = data.products.map((data, index) =>
 			data.productVariants[0]
 		).map((data) => {
-		    return { title: data['title'], price: data['price'], imageUrl: data['imageUrl'], count: 0, priceTotal: 0 }
+		    return {
+		    	title: data['title'],
+		    	price: data['price'],
+		    	imageUrl: data['imageUrl'],
+		    	count: 0,
+		    	priceTotal: 0
+		    }
 		})
 
 		if( productList.length > 0 ){
-			if( this.state.products === null ) {
+			if( this.state.products.length === 0 ) {
 				this.setState({'products': productList});
 				const products = this.state.cartProducts;
 				productList.map((product, index) => {

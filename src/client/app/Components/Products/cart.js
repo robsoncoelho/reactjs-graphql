@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-
-import style from './style.scss';
 import FaPlus from 'react-icons/lib/fa/plus';
 import FaMinus from 'react-icons/lib/fa/minus';
+
+import style from './style.scss';
 
 const Cart = ({ total }) => (
 	<section className={style.cart}>

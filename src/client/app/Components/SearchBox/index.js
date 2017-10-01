@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import Geosuggest from 'react-geosuggest';
 import { graphql } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
-
 import { POC_SEARCH, CLIENT } from '../Common/api.js';
-
 import classNames from 'classnames/bind';
-import style from './style.scss';
 import MdLocationOn from 'react-icons/lib/md/location-on';
 import FaArrowRight from 'react-icons/lib/fa/arrow-right';
 import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
+
+import style from './style.scss';
 
 class SearchBox extends Component {
 	constructor(props) {
@@ -95,7 +94,12 @@ class SearchBox extends Component {
 	requestPOCList(datetime, lat, lng) {
 		CLIENT.query({
 		  query: POC_SEARCH,
-		  variables: { now: datetime, algorithm: "NEAREST", lat: lat, long: lng },
+		  variables: {
+		  	now: datetime,
+		  	algorithm: "NEAREST",
+		  	lat: lat,
+		  	long: lng
+		  },
 		}).then((response) => {
 			this.onResponse(response.data.pocSearch);
 	    }).catch((response) => {
@@ -171,11 +175,27 @@ class SearchBox extends Component {
 					</div>
 					<div className={classNames(style.fieldGroup, showComplementBox && style.showFieldGroup)}>
 						<div className={style.fieldBox}>
-							<input onFocus={this.handleFormFocus.bind(this)} onChange={this.handleFormChange.bind(this, "number")} value={address["number"]} disabled={waitingData} type="text" name="number" placeholder="Número" autoComplete="off" />
+							<input
+								onFocus={this.handleFormFocus.bind(this)}
+								onChange={this.handleFormChange.bind(this, "number")}
+								value={address["number"]}
+								disabled={waitingData}
+								type="text"
+								name="number"
+								placeholder="Número"
+								autoComplete="off" />
 							<span className={style.labelError}>{fieldErrors["number"]}</span>
 						</div>
 						<div className={style.fieldBox}>
-							<input onFocus={this.handleFormFocus.bind(this)} onChange={this.handleFormChange.bind(this, "complement")} value={address["complement"]} disabled={waitingData} type="text" name="complement" placeholder="Complemento" autoComplete="off" />
+							<input
+								onFocus={this.handleFormFocus.bind(this)}
+								onChange={this.handleFormChange.bind(this, "complement")}
+								value={address["complement"]}
+								disabled={waitingData}
+								type="text"
+								name="complement"
+								placeholder="Complemento"
+								autoComplete="off" />
 						</div>
 						<div className={style.buttonBox}>
 							<button type="submit">
