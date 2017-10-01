@@ -68,6 +68,7 @@ footer {
         fill: #000; }
       .searchContainer .buttonBox button .buttonLoading {
         font-size: 30px;
+        fill: #fff;
         animation: spin 2s linear infinite; }
       .searchContainer .buttonBox button:hover .buttonIcon {
         fill: #fff; }
@@ -221,7 +222,7 @@ footer {
         padding: 20px;
         text-align: center; }
         .productPage .productsContainer .productList .product.productSelected {
-          border: 1px solid #4d4d4d; }
+          border: 1px solid #fbbe4d; }
         .productPage .productsContainer .productList .product .top {
           flex: 1;
           display: flex;

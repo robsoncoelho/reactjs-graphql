@@ -50,6 +50,7 @@ $input_weight: 60px;
 			}
 			.buttonLoading{
 				font-size: 30px;
+				fill: $color_white;
 				animation: spin 2s linear infinite;
 			}
 			&:hover{
