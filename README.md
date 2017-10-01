@@ -5,7 +5,7 @@ Application running ReactJS + Webpack + GraphQL API Requests by Apollo Client.
 ### Prerequisites
 
 ```
-node v6
+node v6 +
 http-server installed globally ( https://www.npmjs.com/package/http-server )
 ```
 
