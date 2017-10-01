@@ -59,6 +59,16 @@ class Products extends Component {
 		if( productList.length > 0 ){
 			if( this.state.products === null ) {
 				this.setState({'products': productList});
+				const products = this.state.cartProducts;
+				productList.map((product, index) => {
+					products.some(function(productCart){
+				        if(product.title === productCart.title){
+				        	productList[index] = productCart;
+				        }
+
+				    });
+				})
+				this.setState({'products': productList});
 			} else {
 				const products = this.state.cartProducts;
 				productList.map((product, index) => {
@@ -70,8 +80,10 @@ class Products extends Component {
 				    });
 				})
 				this.setState({'products': productList});
+				this.setState({'errorMessage': ''});
 			}
 		} else {
+			this.setState({'products': null});
 			this.setState({'errorMessage': 'Nenhum produto localizado'})
 		}
 	}
