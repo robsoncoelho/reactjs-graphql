@@ -181,3 +181,38 @@
 		transform:rotate(360deg);
 	}
 }
+
+@media (max-width: 1160px) {
+	.productPage{
+		.productsContainer{
+			width: 850px;
+		}
+	}
+}
+
+@media (max-width: 870px) {
+	.productPage{
+		.productsContainer{
+			width: 567px;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.productPage{
+		.productsContainer{
+			width: 290px;
+			.errorMessage{
+				width: 100%;
+			}
+			.filters{
+				flex-wrap: wrap;
+			    height: 90px;
+			    .categoryField,
+			    .searchField{
+			    	height: 40px;
+			    }
+			}
+		}
+	}
+}
