@@ -1,0 +1,2 @@
+export const SET_POC_RESULTS = 'SET_POC_RESULTS'
+export const SET_SEARCH_FILTER = 'SET_SEARCH_FILTER'

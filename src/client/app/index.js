@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
+import { createStore } from 'redux';
 
-import { CLIENT } from './Components/Common/api.js';
-
-import Header from './Components/Header/';
-import Footer from './Components/Footer/';
-import SearchBox from './Components/SearchBox/';
+import Header from './Components/Header/Header.scene';
+import Footer from './Components/Footer/Footer.scene';
+import SearchBox from './Components/SearchBox/SearchBox.scene';
 import Products from './Components/Products/';
 import style from './Components/Common/style.scss';
 
+import configureStore from './Config/configureStore';
+import { CLIENT } from './Components/Common/api.js';
+
+const store = configureStore();
+
 const App = () => (
-	<ApolloProvider client={CLIENT}>
+	<ApolloProvider store={store} client={CLIENT}>
     	<Router>
 	    	<div className={style.main}>
 	    		<Header />
