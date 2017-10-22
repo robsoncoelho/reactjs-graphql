@@ -15,7 +15,6 @@ import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
 import style from './style.scss';
 
 class SearchBox extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,13 +23,16 @@ class SearchBox extends Component {
 				location: {},
 				number: '',
 				complement: '',
-			},
-			fieldErrors: {},
-			waitingData: false,
-			showComplementBox: false,
+			}
 		}
 
+		this.showComplementBox = false;
 		this.baseState = this.state;
+		this.waitingData = false;
+		this.fieldErrors = {
+			address: 'Endereço não informado',
+			number: 'Número não informado'
+		}
 	}
 
 	onSuggestSelect(suggest) {
@@ -45,8 +47,7 @@ class SearchBox extends Component {
 			fields['number'] = number[0].long_name;
 		}
 
-		this.setState({'showComplementBox': true})
-		this.setState({fieldErrors: ''})
+		this.showComplementBox = true;
 		this.setState({fields})
 	}
 
@@ -60,7 +61,6 @@ class SearchBox extends Component {
 		let fields = this.state.address;
 		fields[field] = event.target.value;        
 		this.setState({fields});
-		this.setState({fieldErrors: ''})
 	}
 
 	handleFormFocus() {
@@ -71,25 +71,17 @@ class SearchBox extends Component {
 	handleFormSubmit(event) {
 		event.preventDefault();
 
-		let fieldErrors = {};
 		let isValid = true;
 
-		if( this.state.address.name === ''){
-			fieldErrors["address"] = "Endereço não informado";
-			isValid = false;
-		}
-		if( this.state.address.number === ''){
-			fieldErrors["number"] = "Número não informado";
+		if( this.state.address.name === '' || this.state.address.number === ''){
 			isValid = false;
 		}
 
-		if(!this.state.waitingData ){
+		if(!this.waitingData ){
 			if( isValid ){
 				let date = new Date().toISOString();
 				this.requestPOCList(date, this.state.address.location.lat, this.state.address.location.lng);
-				this.setState({waitingData: true})
-			} else {
-				this.setState({fieldErrors: fieldErrors})
+				this.waitingData = true;
 			}
 		}
 	}
@@ -111,7 +103,7 @@ class SearchBox extends Component {
 	}
 
 	onResponse(data) {
-		this.setState({waitingData: false});
+		this.waitingData = false;
 		if( data.length > 0){
 			if( data[1].status === "AVAILABLE" ){
 				this.props.setPocResults(data[1]);
