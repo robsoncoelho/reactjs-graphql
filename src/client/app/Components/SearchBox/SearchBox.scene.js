@@ -14,76 +14,79 @@ import FaCircleONotch from 'react-icons/lib/fa/circle-o-notch';
 
 import style from './style.scss';
 
+const initialState = {
+	showComplementBox: false,
+	waitingData: false,
+	resultStatus: '',
+	handleSubmit: false,
+	address: {
+		name: null,
+		location: {},
+		number: '',
+		complement: '',
+	}
+}
+
 class SearchBox extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			address: {
-				name: '',
-				location: {},
-				number: '',
-				complement: '',
-			}
-		}
+		this.state = initialState;
+	}
 
-		this.showComplementBox = false;
-		this.baseState = this.state;
-		this.waitingData = false;
-		this.fieldErrors = {
-			address: 'Endereço não informado',
-			number: 'Número não informado'
-		}
+	reset() {
+		this.setState(initialState);
 	}
 
 	onSuggestSelect(suggest) {
-		let fields = this.state.address;
-		fields['name'] = suggest.description;
-		fields['location'] = suggest.location;
+		let address = this.state.address;
+		address['name'] = suggest.description;
+		address['location'] = suggest.location;
 
 		let number = suggest.gmaps.address_components.filter((item) => item.types == 'street_number');
 
 		if( number[0] ){
-			let fields = this.state.address;
-			fields['number'] = number[0].long_name;
+			address['number'] = number[0].long_name;
 		}
 
-		this.showComplementBox = true;
-		this.setState({fields})
+		this.setState({ address });
+		this.setState({ showComplementBox: true });
 	}
 
 	onSuggestBlur(suggest) {
 		if( suggest === '' ){
-			this.setState(this.baseState);
+			this.reset();
 		}
 	}
 
 	handleFormChange(field, event) {
-		let fields = this.state.address;
-		fields[field] = event.target.value;        
-		this.setState({fields});
+		let address = this.state.address;
+		address[field] = event.target.value;
+		this.setState({ address });
 	}
 
 	handleFormFocus() {
 		this.props.setPocResults(false);
-		this.setState({errorMessage: ''})
+		this.setState({ handleSubmit: false });
 	}
 
 	handleFormSubmit(event) {
 		event.preventDefault();
 
-		let isValid = true;
+		let requiredFields = true;
 
-		if( this.state.address.name === '' || this.state.address.number === ''){
-			isValid = false;
+		if( !this.state.address['name'] || !this.state.address['number'] ){
+			requiredFields = false;
 		}
 
-		if(!this.waitingData ){
-			if( isValid ){
+		if( !this.state.waitingData ){
+			if( requiredFields ){
 				let date = new Date().toISOString();
 				this.requestPOCList(date, this.state.address.location.lat, this.state.address.location.lng);
-				this.waitingData = true;
+				this.setState({ waitingData: true });
 			}
 		}
+
+		this.setState({ handleSubmit: true });
 	}
 
 	requestPOCList(datetime, lat, lng) {
@@ -103,39 +106,60 @@ class SearchBox extends Component {
 	}
 
 	onResponse(data) {
-		this.waitingData = false;
-		if( data.length > 0){
+		this.setState({ waitingData: false });
+		if( data.length > 0 ){
 			if( data[1].status === "AVAILABLE" ){
 				this.props.setPocResults(data[1]);
+				this.setState({ resultStatus: data[1].status }); 
 			} else {
-				this.props.setPocResults(false);
-				this.setState({'errorMessage': 'Nossos fornecedores nessa região não estão disponíveis no momento.'})
+				this.props.setPocResults(data[1]);
+				this.setState({ resultStatus: "NOT_AVAILABLE" });
 			}
 		} else {
 			this.props.setPocResults(false);
-			this.setState({'errorMessage': 'Ops! Não temos fornecedores para atender essa região no momento.'})
+			this.setState({ resultStatus: "NO_RESULTS" });
 		}
 	}
 
 	onFail(response) {
 		this.props.setPocResults(false);
-		this.setState({'errorMessage': 'Ops! Não foi possível realizar sua busca, tente novamente dentro de alguns instantes.'})
+		this.setState({ resultStatus: "REQUEST_ERROR" });
+	}
+
+	setErrorMessage(status) {
+		switch(status){
+			case 'NOT_AVAILABLE':
+				return 'Nossos fornecedores nessa região não estão disponíveis no momento.';
+			break;
+			case 'NO_RESULTS':
+				return 'Ops! Não temos fornecedores para atender essa região no momento.';
+			break;
+			case 'REQUEST_ERROR':
+				return 'Ops! Não foi possível realizar sua busca, tente novamente dentro de alguns instantes.';
+			break;
+			default:
+				return false;
+			break;
+		}
 	}
 
   	render() {
   		const {
-  			showComplementBox,
-  			address,
-  			fieldErrors,
-  			waitingData,
-  			errorMessage
-  		} = this.state;
-
-  		const {
   			pocResults
   		} = this.props;
 
-  		let Iconsubmit;
+  		const {
+			waitingData,
+  			showComplementBox,
+  			address,
+  			handleSubmit,
+  			resultStatus,
+  		} = this.state;
+
+  		const errorMessage = this.setErrorMessage(resultStatus);
+
+  		let Iconsubmit,
+  			inputText = true;
 
   		if( !waitingData ){
   			Iconsubmit = <FaArrowRight className={style.buttonIcon} />
@@ -167,7 +191,9 @@ class SearchBox extends Component {
 							 	disabled={waitingData}
 							 	country={['br']}
 								onSuggestSelect={this.onSuggestSelect.bind(this)} />
-							<span className={style.labelError}>{fieldErrors["address"]}</span>
+							{ !address.name && handleSubmit &&
+								<span className={style.labelError}>{'Endereço não informado.'}</span>
+							}
 						</div>
 					</div>
 					<div className={classNames(style.fieldGroup, showComplementBox && style.showFieldGroup)}>
@@ -175,13 +201,15 @@ class SearchBox extends Component {
 							<input
 								onFocus={this.handleFormFocus.bind(this)}
 								onChange={this.handleFormChange.bind(this, "number")}
-								value={address["number"]}
+								value={address.number}
 								disabled={waitingData}
 								type="text"
 								name="number"
 								placeholder="Número"
 								autoComplete="off" />
-							<span className={style.labelError}>{fieldErrors["number"]}</span>
+							{ !address.number && handleSubmit &&
+								<span className={style.labelError}>{'Número não informado.'}</span>
+							}
 						</div>
 						<div className={style.fieldBox}>
 							<input
