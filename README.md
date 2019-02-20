@@ -22,3 +22,7 @@ npm start
 ```
 
 The script will run `npm build` to create a public folder and start http-server to `localhost:3000`. The browser window will open automatically.# quiz-web
+
+### Screenshot
+
+![interface](https://github.com/robsoncoelho/reactjs-graphql/blob/master/screenshot2.png)
